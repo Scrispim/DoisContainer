@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-principal-1
+spec:
+  schedule: "*/1 * * * *"  # Configuração do agendamento - a cada 1 minutos
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 10
+      template:
+        spec:          
+          containers:
+          - name: container1
+            image: crispimdocker/doiscontainers:latest
+            command: [ "dotnet", "DoisContainer.dll" ]
+            args:
+            - "argumento1_para_container_1"
+            # Outras configurações do container1...
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-principal-2
+spec:
+  schedule: "*/2 * * * *"  # Configuração do agendamento - a cada 2 minutos
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 10
+      template:
+        spec:
+          containers:
+          - name: container2
+            image: crispimdocker/doiscontainers:latest
+            command: [ "dotnet", "DoisContainer.dll" ]
+            args:
+            - "argumento1_para_container_2"
+            # Outras configurações do container1...
+          restartPolicy: OnFailure
+
+
